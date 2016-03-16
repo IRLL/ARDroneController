@@ -3,7 +3,8 @@
 """
 Author: James Irwin (james.irwin@wsu.edu)
 Description:
-    Example code for getting started with the ardrone
+    Accepts twist messages to forward to quadcopter, ensuring
+    that the quadrotor stays within specified bounds.
 """
 
 import rospy
