@@ -19,6 +19,7 @@ class DroneMux:
 		#create message publisher for sending drone movement commands
 		self.output_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
 		self.location = Pose()
+		self.bounds = rospy.get_param("/bounds")
 
 	def teleop_callback(self, twist):
 		#check if we're within bounds
