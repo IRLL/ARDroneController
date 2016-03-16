@@ -34,8 +34,12 @@ class DroneMux:
         self.output_pub.publish(output)
 
     def in_bounds(self):
-        print self.location.position.z
-        if self.location.position.z < 3:
+        if (self.location.position.x < self.bounds.max.x and
+            self.location.position.y < self.bounds.max.y and
+            self.location.position.z < self.bounds.max.z and
+            self.location.position.x > self.bounds.min.x and
+            self.location.position.y > self.bounds.min.y and
+            self.location.position.z > self.bounds.min.z):
             return True
         else:
             return False
