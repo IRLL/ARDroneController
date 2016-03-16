@@ -1,0 +1,4 @@
+<launch>
+	<node name="drone_mux" pkg="ardrone_controller" type="drone_mux.py" required="true"/>
+	<node name="location" pkg="ardrone_controller" type="location_gazebo.py" required="true"/>
+</launch>
