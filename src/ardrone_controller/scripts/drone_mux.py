@@ -25,21 +25,19 @@ class DroneMux:
     def teleop_callback(self, twist):
         #check if we're within bounds
         if self.in_bounds():
-            print 'yes'
             output = twist
         else: #we need to correct
-            print 'no'
             output = self.get_correction()
 
         self.output_pub.publish(output)
 
     def in_bounds(self):
-        if (self.location.position.x < self.bounds.max.x and
-            self.location.position.y < self.bounds.max.y and
-            self.location.position.z < self.bounds.max.z and
-            self.location.position.x > self.bounds.min.x and
-            self.location.position.y > self.bounds.min.y and
-            self.location.position.z > self.bounds.min.z):
+        if (self.location.position.x < self.bounds['x']['max'] and
+            self.location.position.y < self.bounds['y']['max'] and
+            self.location.position.z < self.bounds['z']['max'] and
+            self.location.position.x > self.bounds['x']['min'] and
+            self.location.position.y > self.bounds['y']['min'] and
+            self.location.position.z > self.bounds['z']['min']):
             return True
         else:
             return False
