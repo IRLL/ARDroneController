@@ -1,0 +1,4 @@
+bounds:
+  x: {max: 2.0, min: -2.0}
+  y: {max: 2.0, min: -2.0}
+  z: {max: 2.0, min: 0.0}

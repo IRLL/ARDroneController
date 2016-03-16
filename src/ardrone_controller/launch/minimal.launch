@@ -1,4 +1,9 @@
+<?xml version="1.0"?>
 <launch>
 	<node name="drone_mux" pkg="ardrone_controller" type="drone_mux.py" required="true"/>
 	<node name="location" pkg="ardrone_controller" type="location_gazebo.py" required="true"/>
+
+	<!-- settings file -->
+	<rosparam command="load" file="$(find ardrone_controller)/settings/bounds.yaml" />
+
 </launch>
