@@ -4,6 +4,6 @@
 	<node name="location" pkg="ardrone_controller" type="location_gazebo.py" required="true"/>
 
 	<!-- settings file -->
-	<rosparam command="load" file="$(find ardrone_controller)/settings/bounds.yaml" />
+	<rosparam command="load" file="$(find ardrone_controller)/settings/sim.yaml" />
 
 </launch>

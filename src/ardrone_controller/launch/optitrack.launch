@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+	<node name="drone_mux" pkg="ardrone_controller" type="drone_mux.py" required="true"/>
+	<node name="location" pkg="ardrone_controller" type="location_optitrack.py" required="true"/>
+	<include file="vrpn.launch"/>
+
+	<!-- settings file -->
+	<rosparam command="load" file="$(find ardrone_controller)/settings/optitrack_room.yaml" />
+
+</launch>
