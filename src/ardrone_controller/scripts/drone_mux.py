@@ -12,6 +12,8 @@ from sensor_msgs.msg import Image #for recieving video feed
 from geometry_msgs.msg import Twist # controlling the movements
 from geometry_msgs.msg import Pose
 from std_msgs.msg import Empty #send empty message for takeoff and landing
+import tf
+from math import sin,cos
 
 class DroneMux:
     def __init__(self):
@@ -44,7 +46,36 @@ class DroneMux:
 
     def get_correction(self):
         twist = Twist()
-        twist.linear.z = -0.05
+        correction_speed = 0.5
+        #check for what bounds need to be fixed in absolute frame
+        #X
+        x = 0
+        y = 0
+        if(self.location.position.x < self.bounds['x']['min']):
+            x = correction_speed
+        if(self.location.position.x > self.bounds['x']['max']):
+            x = -correction_speed
+        #Y
+        if(self.location.position.y < self.bounds['y']['min']):
+            y = correction_speed
+        if(self.location.position.y > self.bounds['y']['max']):
+            y = -correction_speed
+        #Z
+        if(self.location.position.z < self.bounds['z']['min']):
+            twist.linear.z = correction_speed
+        if(self.location.position.z > self.bounds['z']['max']):
+            twist.linear.z = -correction_speed
+
+        #now to to transform values to ardrone's frame of reference
+        #no need to convert z, only x,y
+        (_, _, theta) = tf.transformations.euler_from_quaternion([
+            self.location.orientation.x,
+            self.location.orientation.y,
+            self.location.orientation.z,
+            self.location.orientation.w])
+        twist.linear.x = x*cos(theta) + y*sin(theta)
+        twist.linear.y = -x*sin(theta) + y*cos(theta)
+
         return twist
 
     
