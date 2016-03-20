@@ -129,7 +129,7 @@ include_directories(
 # add_dependencies(ardrone_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(ardrone_controller_node src/ardrone_controller_node.cpp)
+#  add_executable(ps3_controller src/ps3_controller.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -139,6 +139,14 @@ include_directories(
 # target_link_libraries(ardrone_controller_node
 #   ${catkin_LIBRARIES}
 # )
+
+
+####My Executables:
+ add_executable(ps3_controller src/ps3_controller.cpp)
+ target_link_libraries(ps3_controller
+   ${catkin_LIBRARIES}
+ )
+ add_dependencies(ps3_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 #############
 ## Install ##
