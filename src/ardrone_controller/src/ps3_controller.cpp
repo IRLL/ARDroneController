@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "ardrone_controller/ps3.h"
 
 #include <iostream>
 #include <linux/joystick.h>
@@ -198,7 +199,7 @@ int main(int argc, char **argv)
 	 * than we can send them, the number here specifies how many messages to
 	 * buffer up before throwing some away.
 	 */
-	ros::Publisher pub = n.advertise<std_msgs::String>("/joystick", 1);
+	ros::Publisher pub = n.advertise<ardrone_controller::ps3>("/ps3", 1);
 
 	ros::Rate loop_rate(10);
 
@@ -207,6 +208,8 @@ int main(int argc, char **argv)
 	 * a unique string for each message.
 	 */
 	CONTROLLER_STATE state = {0};
+	CONTROLLER_STATE normalized_state;
+	ardrone_controller::ps3 msg;
 	int fd;
 	fd = open("/dev/input/js1", O_RDONLY | O_NONBLOCK);
 	while (ros::ok())
@@ -232,7 +235,25 @@ int main(int argc, char **argv)
 	 */
 	//pub.publish(msg);
 	update_state(fd, state);
-	print_state(cleanup_state(state));
+	normalized_state = cleanup_state(state);
+	msg.axisLX = normalized_state.axisLX;
+	msg.axisLY = normalized_state.axisLY;
+	msg.axisRX = normalized_state.axisRX;
+	msg.axisRY = normalized_state.axisRY;
+
+	msg.trigL1 = normalized_state.trigL1;
+	msg.trigL2 = normalized_state.trigL2;
+	msg.trigR1 = normalized_state.trigR1;
+	msg.trigR2 = normalized_state.trigR2;
+
+	msg.btnTriangle = normalized_state.btnTriangle;
+	msg.btnCircle = normalized_state.btnCircle;
+	msg.btnSquare = normalized_state.btnSquare;
+	msg.btnX = normalized_state.btnX;
+
+	pub.publish(msg);
+
+	//print_state(cleanup_state(state));
 	ros::spinOnce();
 	loop_rate.sleep();
 	}
