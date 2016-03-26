@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <launch>
 	<node name="drone_mux" pkg="ardrone_controller" type="drone_mux.py" required="true"/>
+	<node name="drone_teleop" pkg="ardrone_controller" type="ardrone_teleop.py" required="false"/>
+	<node name="ps3_controller" pkg="ardrone_controller" type="ps3_controller" required="false"/>
 	<node name="location" pkg="ardrone_controller" type="location_gazebo.py" required="true"/>
 
 	<!-- settings file -->
